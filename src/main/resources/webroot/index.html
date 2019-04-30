@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chuck Norris jokes loader</title>
+  <script src="http://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vertx/3.7.0/vertx-eventbus.min.js"></script>
+
+</head>
+<body>
+
+  <ul id="jokes-list">
+  </ul>
+
+  <script>
+    var jokesListElement = document.getElementById("jokes-list");
+    var eb = new EventBus('http://localhost:8080/eventbus');
+    eb.onopen = function () {
+
+      setInterval(() => {
+        eb.send('randomquote.myapplication', '', (error, message) => {
+          if (error) {
+            console.err(JSON.stringify(error));
+          } else {
+            addJoke(message.body);
+          }
+        });
+      }, 1000);
+
+    }
+
+    function addJoke(joke) {
+      var newElement = document.createElement("li");
+      newElement.appendChild(document.createTextNode(joke));
+      if (jokesListElement.hasChildNodes()) {
+        jokesListElement.insertBefore(newElement, jokesListElement.childNodes[0]);
+      } else {
+        jokesListElement.appendChild(newElement);
+      }
+    }
+
+  </script>
+
+</body>
+</html>
