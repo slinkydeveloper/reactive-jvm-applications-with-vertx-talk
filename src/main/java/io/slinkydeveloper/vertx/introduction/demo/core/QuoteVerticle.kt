@@ -13,6 +13,7 @@ class QuoteVerticle(val id: Integer) : CoroutineVerticle() {
     webClient = WebClient.create(vertx)
     vertx.eventBus().consumer<String>("randomquote.myapplication") { msg ->
       launch {
+        println("Consuming message in QuoteVerticle ")
         val result = webClient
           .getAbs("http://api.icndb.com/jokes/random")
           .sendAwait()
@@ -26,3 +27,4 @@ class QuoteVerticle(val id: Integer) : CoroutineVerticle() {
     println("QuoteVerticle deployed")
   }
 }
+.result()..body()
