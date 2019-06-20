@@ -17,7 +17,13 @@ public class HttpServerVerticle extends AbstractVerticle {
       vertx
         .eventBus()
         .<String>send("randomquote.myapplication", "quote", ar -> {
-          System.out.println(String.format("Handling from HttpServerVerticle thread: %d, id: %d", Thread.currentThread().getId(), id));
+          System.out.println(
+            String.format(
+              "Handling from HttpServerVerticle thread: %d, id: %d",
+              Thread.currentThread().getId(),
+              id
+            )
+          );
           if (ar.succeeded()) {
             req.response()
               .putHeader("content-type", "text/plain")

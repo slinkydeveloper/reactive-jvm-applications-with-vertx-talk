@@ -27,4 +27,3 @@ class QuoteVerticle(val id: Integer) : CoroutineVerticle() {
     println("QuoteVerticle deployed")
   }
 }
-.result()..body()
